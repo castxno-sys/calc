@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Calculadora de Pago</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app">
+    <header class="app-header">
+      <h1>Calculadora</h1>
+      <span class="badge" title="Ningún dato de tarjeta sale del navegador">Modo demo</span>
+    </header>
+
+    <section class="calculator" aria-label="Calculadora">
+      <div class="display">
+        <div class="expression" id="expression" aria-live="polite"></div>
+        <div class="value" id="value">0</div>
+      </div>
+
+      <div class="keys">
+        <button class="key fn" data-action="clear">AC</button>
+        <button class="key fn" data-action="backspace" aria-label="Borrar">⌫</button>
+        <button class="key fn" data-action="percent">%</button>
+        <button class="key op" data-op="/" aria-label="Dividir">÷</button>
+
+        <button class="key" data-digit="7">7</button>
+        <button class="key" data-digit="8">8</button>
+        <button class="key" data-digit="9">9</button>
+        <button class="key op" data-op="*" aria-label="Multiplicar">×</button>
+
+        <button class="key" data-digit="4">4</button>
+        <button class="key" data-digit="5">5</button>
+        <button class="key" data-digit="6">6</button>
+        <button class="key op" data-op="-" aria-label="Restar">−</button>
+
+        <button class="key" data-digit="1">1</button>
+        <button class="key" data-digit="2">2</button>
+        <button class="key" data-digit="3">3</button>
+        <button class="key op" data-op="+" aria-label="Sumar">+</button>
+
+        <button class="key wide" data-digit="0">0</button>
+        <button class="key" data-action="decimal">.</button>
+        <button class="key equals" data-action="equals" aria-label="Pagar y ver resultado">=</button>
+      </div>
+
+      <p class="fee-note">Cada resultado cuesta <strong id="fee-label"></strong>.</p>
+    </section>
+
+    <section class="history" aria-label="Historial de pagos">
+      <h2>Resultados pagados</h2>
+      <ul id="history-list"></ul>
+      <p class="total">Total cobrado: <strong id="total-charged">$0.00</strong></p>
+    </section>
+  </main>
+
+  <!-- Modal de pago -->
+  <div class="overlay" id="overlay" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="pay-title">
+      <button class="close" id="close-modal" aria-label="Cancelar">×</button>
+      <h2 id="pay-title">Pago requerido</h2>
+      <p class="pay-summary">
+        Para ver el resultado de <code id="pay-expression"></code> se cobrará
+        <strong id="pay-amount"></strong> a tu tarjeta.
+      </p>
+
+      <div class="card-preview" id="card-preview">
+        <div class="card-brand" id="card-brand">TARJETA</div>
+        <div class="card-number" id="card-number-preview">•••• •••• •••• ••••</div>
+        <div class="card-bottom">
+          <span id="card-name-preview">NOMBRE DEL TITULAR</span>
+          <span id="card-exp-preview">MM/AA</span>
+        </div>
+      </div>
+
+      <form id="pay-form" novalidate autocomplete="off">
+        <label>
+          Nombre en la tarjeta
+          <input id="card-name" type="text" placeholder="Juan Pérez" required>
+        </label>
+        <label>
+          Número de tarjeta
+          <input id="card-number" type="text" inputmode="numeric" placeholder="4242 4242 4242 4242" maxlength="23" required>
+        </label>
+        <div class="row">
+          <label>
+            Vencimiento
+            <input id="card-exp" type="text" inputmode="numeric" placeholder="MM/AA" maxlength="5" required>
+          </label>
+          <label>
+            CVV
+            <input id="card-cvv" type="password" inputmode="numeric" placeholder="123" maxlength="4" required>
+          </label>
+        </div>
+
+        <p class="error" id="pay-error" role="alert"></p>
+
+        <button type="submit" class="pay-btn" id="pay-btn">Pagar</button>
+        <p class="demo-hint">
+          Demo: usa <code>4242 4242 4242 4242</code> (aprobada) o
+          <code>4000 0000 0000 0002</code> (rechazada), con cualquier fecha futura y CVV.
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <script src="payment.js"></script>
+  <script src="calculator.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
