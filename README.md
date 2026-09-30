@@ -34,3 +34,9 @@ cumplir PCI DSS); usa una pasarela como [Stripe](https://stripe.com/docs/payment
 2. En el frontend, sustituye los campos de tarjeta por Stripe Elements y confirma el pago con
    `stripe.confirmCardPayment(clientSecret)`.
 3. Reemplaza `Payment.charge()` por esa llamada; el resto de la app no cambia.
+
+## Capturas
+
+| Cálculo | Pago | Resultado |
+|---|---|---|
+| ![Cálculo](docs/1-calculo.png) | ![Pago](docs/2-pago.png) | ![Resultado](docs/3-resultado.png) |
